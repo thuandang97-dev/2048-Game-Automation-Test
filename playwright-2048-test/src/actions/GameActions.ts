@@ -47,9 +47,8 @@ export class GameActions {
     await this.pressRandomKeys(count);
 
     const score = await this.getScore();
-    const highestTile = await this.getHighestTile();
 
-    await saveToLocalStorage(this.page, 'finalScoreAndTile', { score, highestTile });
+    await saveToLocalStorage(this.page, 'finalScoreAndTile', { score });
   }
 
   async clickNewGame() {
