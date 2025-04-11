@@ -1,6 +1,7 @@
 import { Page } from '@playwright/test';
 import { GamePage } from '../pages/GamePage';
-import { saveToLocalStorage } from '../utils/storage';
+import { saveToLocalStorage, clearLocalStorage } from '../utils/storage';
+import { StorageKey } from '../constants/StorageKey';
 
 export class GameActions {
   private game: GamePage;
@@ -9,16 +10,18 @@ export class GameActions {
     this.game = new GamePage(page);
   }
 
-  async dismissWelcomeTooltipIfVisible() {
-    if (await this.game.closeButton.isVisible()) {
-      await this.game.closeButton.click();
-      await this.page.waitForTimeout(200);
-    }
-  }
-
   async navigateToGame() {
     await this.page.goto('/');
     await this.dismissWelcomeTooltipIfVisible();
+  }
+
+  async dismissWelcomeTooltipIfVisible() {
+    const closeButton = this.page.locator('.tooltip-material button.absolute');
+
+    if (await closeButton.isVisible()) {
+      await closeButton.click();
+      await this.page.waitForTimeout(200);
+    }
   }
 
   async getTitle(): Promise<string> {
@@ -47,12 +50,35 @@ export class GameActions {
     await this.pressRandomKeys(count);
 
     const score = await this.getScore();
+    const highestTile = await this.getHighestTile();
 
-    await saveToLocalStorage(this.page, 'finalScoreAndTile', { score });
+    await saveToLocalStorage(this.page, StorageKey.FinalScoreAndTile, { score, highestTile });
+  }
+
+  async getFromLocalStorage<T>(key: string): Promise<T | null> {
+    return await this.page.evaluate((k) => {
+      const value = localStorage.getItem(k);
+      return value ? JSON.parse(value) : null;
+    }, key);
+  }
+
+  async removeFromLocalStorage(key: string): Promise<void> {
+    await this.page.evaluate((k) => {
+      localStorage.removeItem(k);
+    }, key);
+  }
+
+  async clearAllLocalStorage(): Promise<void> {
+    await clearLocalStorage(this.page);
   }
 
   async clickNewGame() {
     await this.game.newGameButton.click();
+
+    await this.game.startButton.waitFor({ state: 'visible' });
+    await this.game.startButton.click();
+
+    await this.clearAllLocalStorage();
   }
 
   async openTutorial() {

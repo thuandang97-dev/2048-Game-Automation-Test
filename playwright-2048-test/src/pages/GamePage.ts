@@ -3,23 +3,25 @@
 import { Page, Locator } from '@playwright/test';
 
 export class GamePage {
-  readonly scoreBox: Locator;
-  readonly tileValues: Locator;
-  readonly newGameButton: Locator;
+  readonly closeButton: Locator;
   readonly menuButton: Locator;
-  readonly tutorialButton: Locator;
+  readonly newGameButton: Locator;
+  readonly scoreBox: Locator;
+  readonly startButton: Locator;
   readonly swapButton: Locator;
   readonly swapTooltip: Locator;
-  readonly closeButton: Locator;
+  readonly tileValues: Locator;
+  readonly tutorialButton: Locator;
 
   constructor(public page: Page) {
-    this.scoreBox = page.locator('.shrink-1.truncate').first();
-    this.tileValues = page.locator('.tile .tile-inner');
-    this.newGameButton = page.getByRole('button', { name: 'New Game' });
+    this.closeButton = this.page.locator('.tooltip-material button.absolute');
     this.menuButton = page.getByRole('button', { name: 'Menu' });
-    this.tutorialButton = page.getByText('Tutorial');
+    this.newGameButton = page.getByRole('button', { name: 'New Game' });
+    this.scoreBox = page.locator('.shrink-1.truncate').first();
+    this.startButton = page.locator('button', { hasText: 'Start New Game' });
     this.swapButton = page.getByRole('button', { name: 'SWAP TWO TILES' });
     this.swapTooltip = page.locator('.tile-swap-tooltip');
-    this.closeButton = this.page.locator('.tooltip-material button.absolute');
+    this.tileValues = page.locator('.tile .tile-inner');
+    this.tutorialButton = page.getByText('Tutorial');
   }
 }
