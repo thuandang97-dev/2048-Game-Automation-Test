@@ -2,7 +2,9 @@
 const { defineConfig } = require('@playwright/test');
 
 module.exports = defineConfig({
+  testDir: './src/tests',
   use: {
+    baseURL: 'https://play2048.co',
     browserName: 'chromium',
     headless: false,
     screenshot: 'on',
