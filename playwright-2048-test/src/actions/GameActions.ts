@@ -110,4 +110,28 @@ export class GameActions {
   async waitForTilesToSettle() {
     await this.page.waitForTimeout(500);
   }
+
+  async isDoOverVisible(): Promise<boolean> {
+    return await this.game.doOverText.isVisible();
+  }
+
+  async clickUndoButton() {
+    await this.game.activeButton.click();
+  }
+
+  async isPowerupsVisible(): Promise<boolean> {
+    return await this.game.powerupsText.isVisible();
+  }
+
+  async isReadyDialogVisible(): Promise<boolean> {
+    return await this.game.readyDialog.isVisible();
+  }
+
+  async isStartPlayingButtonVisible(): Promise<boolean> {
+    return await this.game.startPlayingButton.isVisible();
+  }
+
+  async startPlaying() {
+    await this.game.startPlayingButton.click();
+  }
 }
