@@ -8,3 +8,7 @@ export async function saveToLocalStorage(page: Page, storageKey: string, storage
     [storageKey, storageValue]
   );
 }
+
+export async function clearLocalStorage(page: Page): Promise<void> {
+  await page.evaluate(() => localStorage.clear());
+}
