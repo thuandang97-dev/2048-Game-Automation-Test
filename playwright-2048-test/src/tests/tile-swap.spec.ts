@@ -1,4 +1,6 @@
 import { test, expect } from '@playwright/test';
+
+// Actions
 import { GameActions } from '../actions/GameActions';
 
 test('User swaps two tiles and see tooltip with 0 uses left', async ({ page }) => {

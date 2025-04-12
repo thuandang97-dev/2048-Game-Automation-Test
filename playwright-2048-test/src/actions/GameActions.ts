@@ -1,12 +1,18 @@
 import { Page } from '@playwright/test';
+
+// Constants
+import { StorageKey } from '../constants/StorageKey';
+
+// Pages
 import { GamePage } from '../pages/GamePage';
+
+// Utils
 import {
-  saveToLocalStorage,
   clearLocalStorage,
   getFromLocalStorage as getFromStorage,
   removeFromLocalStorage as removeFromStorage,
+  saveToLocalStorage,
 } from '../utils/storage';
-import { StorageKey } from '../constants/StorageKey';
 
 export class GameActions {
   private game: GamePage;

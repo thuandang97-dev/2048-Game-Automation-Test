@@ -1,5 +1,9 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
+
+// Actions
 import { GameActions } from '../actions/GameActions';
+
+// Constants
 import { StorageKey } from '../constants/StorageKey';
 
 test('User verifies game state persistence after reloading', async ({ page }) => {

@@ -28,7 +28,7 @@ export class GamePage {
     this.scoreBox = page.locator('.shrink-1.truncate').first();
     this.startButton = page.locator('button', { hasText: 'Start New Game' });
     this.startPlayingButton = page.locator('button', { hasText: 'Start Playing' });
-    this.swapButton = page.getByRole('button', { name: 'SWAP TWO TILES' });
+    this.swapButton = page.locator('button.bg-leather.shadow-button').nth(1);
     this.swapIconButton = page.locator('button').filter({
       has: page.locator('svg path[d*="M18 9h.53"]'),
     });

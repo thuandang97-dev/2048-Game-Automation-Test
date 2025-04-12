@@ -108,3 +108,7 @@
 
 - Thuan Dang
 - Email: [thuandang97.dev@gmail.com](mailto:thuandang97.dev@gmail.com)
+
+## Documents
+
+- [Report Documents](https://drive.google.com/drive/folders/1e14KfdHNqod0RzATCTLzIuIgq_J7hNAj?usp=drive_link)
