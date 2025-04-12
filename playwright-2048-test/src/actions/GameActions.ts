@@ -1,6 +1,11 @@
 import { Page } from '@playwright/test';
 import { GamePage } from '../pages/GamePage';
-import { saveToLocalStorage, clearLocalStorage } from '../utils/storage';
+import {
+  saveToLocalStorage,
+  clearLocalStorage,
+  getFromLocalStorage as getFromStorage,
+  removeFromLocalStorage as removeFromStorage,
+} from '../utils/storage';
 import { StorageKey } from '../constants/StorageKey';
 
 export class GameActions {
@@ -56,16 +61,11 @@ export class GameActions {
   }
 
   async getFromLocalStorage<T>(key: string): Promise<T | null> {
-    return await this.page.evaluate((k) => {
-      const value = localStorage.getItem(k);
-      return value ? JSON.parse(value) : null;
-    }, key);
+    return await getFromStorage<T>(this.page, key);
   }
 
   async removeFromLocalStorage(key: string): Promise<void> {
-    await this.page.evaluate((k) => {
-      localStorage.removeItem(k);
-    }, key);
+    await removeFromStorage(this.page, key);
   }
 
   async clearAllLocalStorage(): Promise<void> {
@@ -133,5 +133,13 @@ export class GameActions {
 
   async startPlaying() {
     await this.game.startPlayingButton.click();
+  }
+
+  async getSwappableTiles() {
+    return this.page.locator('.tile').elementHandles();
+  }
+
+  async isSwapTooltipVisible(): Promise<boolean> {
+    return await this.game.swapTooltip.isVisible();
   }
 }
